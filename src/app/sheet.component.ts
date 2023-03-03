@@ -44,11 +44,38 @@ export class SheetJSComponent {
       /* save data */
       // Convert the Worksheet object to a JavaScript object using the XLSX library
       // and assign it to the `data` property of the component
-      this.data = <AOA>XLSX.utils.sheet_to_json(ws, { range: 1, header: 1 });
+      this.data = <AOA>XLSX.utils.sheet_to_json(ws, { range: 1, header: 1 });//In the sheet_to_json function, the range option is set to 1, which means that the first row will be skipped. The header option is also set to 1 to include the first row as the header row.
+
       // Log the resulting data to the console for debugging purposes
+      console.log(this.data);
+      this.addThirdColumn();
       console.log(this.data);
     };
     // Read the selected file as a binary string using the FileReader object
     reader.readAsBinaryString(target.files[0]);
   }
+  addThirdColumn() {
+    const regex: RegExp = /@gmail.com$/; //not sure about it yest
+    var channelArray: Array<string> = ['one', 'two', 'three'];
+    for (let i = 0; i < this.data.length; i++) {
+      const email = this.data[i][0];
+      // if (!regex.test(email)){
+      //   this.data[i][6]='tito';
+      // }
+      console.log(channelArray.indexOf(this.data[i][4]) > -1);
+
+    }
+  }
+
+  // export(): void {
+  //   /* generate worksheet */
+  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
+
+  //   /* generate workbook and add the worksheet */
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  //   /* save to file */
+  //   XLSX.writeFile(wb, this.fileName);
+  // }
 }
